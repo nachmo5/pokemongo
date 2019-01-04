@@ -9,5 +9,6 @@ export default {
     EEVEE: "https://pokemonletsgo.pokemon.com/assets/img/common/char-eevee.png"
   },
   POKEBALL: "https://i.imgur.com/cixKFBs.jpg",
-  CROWN: "https://i.imgur.com/isn6IEL.png"
+  CROWN: "https://i.imgur.com/isn6IEL.png",
+  STAR: "https://i.imgur.com/DbtJSxq.png"
 };

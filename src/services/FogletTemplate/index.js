@@ -1,5 +1,4 @@
 import React, { PureComponent, Fragment } from "react";
-import get from "lodash/get";
 import { paxos, template, target } from "foglet-template";
 import Loading from "./Loading";
 
@@ -15,6 +14,7 @@ const withFoglet = App =>
       loading: false,
       loadingMessage: "",
       leaders: {},
+      nodeLeaders: {},
       nodeIndex: 0,
       targetIndex: 0
     };
@@ -47,6 +47,29 @@ const withFoglet = App =>
       const nodeId = node.foglet.inViewID;
       nodeTargets[nodeId] = targets;
 
+      const nodePaxos = new paxos(node, ({ cible, pid }) => {
+        this.setState(prev => {
+          const myLeaders = prev.nodeLeaders[nodeId];
+          let myNewLeaders = {};
+          if (!myLeaders) {
+            myNewLeaders[cible] = pid.peer;
+          } else {
+            myNewLeaders = { ...myLeaders, [cible]: pid.peer };
+          }
+          return {
+            leaders: {
+              ...this.state.leaders,
+              [cible]: pid
+            },
+            nodeLeaders: {
+              ...prev.nodeLeaders,
+              [nodeId]: myNewLeaders
+            },
+            loading: false
+          };
+        });
+      });
+
       this.setState(prev => {
         const data = {
           nodeIndex: id,
@@ -54,15 +77,7 @@ const withFoglet = App =>
           nodes: [...prev.nodes, node],
           paxoses: {
             ...prev.paxoses,
-            [nodeId]: new paxos(node, ({ cible, pid }) => {
-              this.setState({
-                leaders: {
-                  ...this.state.leaders,
-                  [cible]: pid
-                },
-                loading: false
-              });
-            })
+            [nodeId]: nodePaxos
           }
         };
         if (targets.length > 0) {
@@ -124,22 +139,6 @@ const withFoglet = App =>
       }
     };
 
-    showNeighbours(node) {
-      if (!node) return;
-      const target = get(this, "state.targets[0]");
-      if (!target) return;
-      console.log("rps : ", node.foglet.getNeighbours());
-      console.log("no : ", node.neighboursOverlay(target.id));
-    }
-
-    showOverlays() {
-      this.state.nodes.forEach(node => {
-        const target = get(this, "state.targets[0]");
-        if (!target) return;
-        if (node.foglet.overlay(target.id))
-          console.log("i am ", node.foglet.inViewID, "overlay : ", target.id);
-      });
-    }
     render() {
       const addedProps = {
         addTarget: this.addTarget,
@@ -148,7 +147,7 @@ const withFoglet = App =>
         nodeTargets: this.state.nodeTargets,
         nodes: this.state.nodeData,
         caught: this.state.caught,
-        leaders: this.state.leaders
+        leaders: this.state.nodeLeaders
       };
       return (
         <Fragment>

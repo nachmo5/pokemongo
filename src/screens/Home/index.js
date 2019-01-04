@@ -52,19 +52,14 @@ class Home extends PureComponent {
             </Paper>
           </Grid>
           <Grid key={2} item>
-            <Grid
-              container
-              spacing={8}
-              direction="row"
-              style={{ overflowY: "auto" }}
-            >
+            <Grid container spacing={8} direction="row">
               {nodes.map(trainer => {
                 const targets = nodeTargets[trainer.id] || [];
                 return (
                   <Grid item xs={4} key={trainer.id}>
                     <Box
                       pokemons={targets}
-                      leaders={leaders}
+                      leaders={leaders[trainer.id] || {}}
                       trainer={trainer}
                       catchPokemon={getTarget}
                       caught={caught}

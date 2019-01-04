@@ -25,22 +25,7 @@ const Box = ({ classes, pokemons, trainer, catchPokemon, caught, leaders }) => (
                   ""
                 ) : (
                   <Grid container direction="column">
-                    {leaders[pokemon.id] &&
-                    leaders[pokemon.id].peer == trainer.id ? (
-                      <Grid item>
-                        <img
-                          className={classes.image}
-                          style={{
-                            width: 100,
-                            height: 50
-                          }}
-                          src={IMAGES.CROWN}
-                        />
-                      </Grid>
-                    ) : (
-                      ""
-                    )}
-                    <Grid item>
+                    <Grid item className={classes.imageContainer}>
                       <img
                         onClick={catchPokemon(trainer, pokemon)}
                         className={classes.image}
@@ -49,6 +34,21 @@ const Box = ({ classes, pokemons, trainer, catchPokemon, caught, leaders }) => (
                         src={pokemon.pokemon}
                       />
                     </Grid>
+                    {leaders[pokemon.id] &&
+                    leaders[pokemon.id] == trainer.id ? (
+                      <Grid item className={classes.imageContainer}>
+                        <img
+                          className={classes.image}
+                          style={{
+                            width: 40,
+                            height: 40
+                          }}
+                          src={IMAGES.STAR}
+                        />
+                      </Grid>
+                    ) : (
+                      ""
+                    )}
                   </Grid>
                 )}
               </Grid>

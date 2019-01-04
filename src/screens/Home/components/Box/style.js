@@ -11,6 +11,10 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     height: "20vh",
     width: "50%"
+  },
+  imageContainer: {
+    display: "block",
+    margin: "auto"
   }
 });
 
