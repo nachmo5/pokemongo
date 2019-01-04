@@ -15,7 +15,7 @@ import style from "./style";
 const App = props => {
   const { classes } = props;
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ overflow: "auto", height: "100%" }}>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route component={NotFound} />
