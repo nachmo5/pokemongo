@@ -10,5 +10,6 @@ export default {
   },
   POKEBALL: "https://i.imgur.com/cixKFBs.jpg",
   CROWN: "https://i.imgur.com/isn6IEL.png",
-  STAR: "https://i.imgur.com/DbtJSxq.png"
+  //  STAR: "https://i.imgur.com/DbtJSxq.png"
+  STAR: "https://i.imgur.com/iWpfdtV.png"
 };

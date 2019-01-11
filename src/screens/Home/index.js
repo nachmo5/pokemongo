@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 //import get from "lodash/get";
 // import { Query } from "services/Client";
@@ -9,7 +9,7 @@ import { Trainer, Pokemon } from "./components/Forms";
 import Box from "./components/Box";
 import style from "./style";
 
-class Home extends PureComponent {
+class Home extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     addTarget: PropTypes.func.isRequired,
